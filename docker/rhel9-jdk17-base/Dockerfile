@@ -9,6 +9,7 @@ ARG CLI_VERSION=3.10.10
 RUN microdnf install yum -y && \
     microdnf install git -y && \
     microdnf install zip -y && \
+    microdnf install npm -y && \
     microdnf install java-17-openjdk -y && \
     microdnf clean all
 # Set JAVA_HOME environment variables
@@ -19,7 +20,10 @@ RUN export PATH=$JAVA_HOME/bin:$PATH
 # Confirm the installation
 RUN java -version && \
     git --version && \
+    npm --version && \
     curl --version
+
+RUN npm install -g diff2html-cli
 
 #RUN curl --request GET --url https://repo1.maven.org/maven2/io/moderne/moderne-cli/{$CLI_VERSION}/moderne-cli-{$CLI_VERSION}.jar --output mod.jar
 #
