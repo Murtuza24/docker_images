@@ -1,5 +1,6 @@
 # Use the Red Hat Enterprise Linux 9 base image
-FROM redhat/ubi9-minimal
+#FROM redhat/ubi9-minimal
+FROM --platform=$TARGETPLATFORM redhat/ubi9-minimal
 
 USER root
 
@@ -7,6 +8,7 @@ USER root
 RUN microdnf install yum -y && \
     microdnf install git -y && \
     microdnf install zip -y && \
+    microdnf install npm -y && \
     microdnf install java-17-openjdk -y && \
     microdnf clean all
 # Set JAVA_HOME environment variables
@@ -17,8 +19,10 @@ RUN export PATH=$JAVA_HOME/bin:$PATH
 # Confirm the installation
 RUN java -version && \
     git --version && \
+    npm --version && \
     curl --version
 
+RUN npm install -g diff2html-cli
 # Set the working directory
 WORKDIR /app
 
