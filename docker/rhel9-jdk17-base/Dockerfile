@@ -1,7 +1,9 @@
 # Use the Red Hat Enterprise Linux 9 base image
-FROM redhat/ubi9-minimal
+FROM redhat/ubi9-minimal:latest
 
 USER root
+
+ARG CLI_VERSION=3.10.10
 
 # Update the package repository and install necessary packages
 RUN microdnf install yum -y && \
@@ -19,8 +21,13 @@ RUN java -version && \
     git --version && \
     curl --version
 
+#RUN curl --request GET --url https://repo1.maven.org/maven2/io/moderne/moderne-cli/{$CLI_VERSION}/moderne-cli-{$CLI_VERSION}.jar --output mod.jar
+#
 # Set the working directory
 WORKDIR /app
+
+ADD mod.jar mod.jar
+RUN chmod +x mod.jar
 
 # Add your application files
 # ADD . /app
