@@ -7,8 +7,10 @@ USER root
 # Update the package repository and install necessary packages
 RUN microdnf install yum -y && \
     microdnf install git -y && \
-    microdnf install zip -y && \
+    microdnf install wget zip unzip tar -y && \
     microdnf install npm -y && \
+    microdnf install vim -y && \
+    microdnf install ca-certificates -y && \
     microdnf install java-17-openjdk -y && \
     microdnf clean all
 # Set JAVA_HOME environment variables
